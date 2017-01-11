@@ -1,5 +1,5 @@
 # 2017code
-Code base for the 2017 code
+Team 3328's code base for the 2017 FRC Steamworks competition.
 
 # Eclipse
 In order to setup eclipse with WPILib follow this guide (no need to install C++ but you can if you like): 
