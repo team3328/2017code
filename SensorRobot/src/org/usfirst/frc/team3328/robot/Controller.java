@@ -8,13 +8,13 @@ public class Controller {
 	Joystick joy;
 	XboxController xbox;
 	
-	boolean joystick = true;
+	boolean joystick;
 	
-	public Controller(){
-		try{
+	public Controller(boolean type){
+		if(type){
+			joystick = true;
 			joy = new Joystick(0);
-		}catch(Exception e){
-			System.out.println("xbox");
+		}else{
 			joystick = false;
 			xbox = new XboxController(0);
 		}
