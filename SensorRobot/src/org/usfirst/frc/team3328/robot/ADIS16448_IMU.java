@@ -585,19 +585,32 @@ public class ADIS16448_IMU extends GyroBase implements Gyro, PIDSource, LiveWind
   }
   
   public boolean getData(double data, int index, double deviation){
-	  if (Math.abs(data - iniv[index]) > deviation){
+	  if (data > iniv[index] + deviation || data < iniv[index] - deviation){
 		  iniv[index] = data;
 		  return true;
 	  }
 	  return false;
   }
   
-  double angleDev = .5, rateDev = .5, accelDev = .1, magDev = 10;
+  double angleDev = 1, rateDev = .5, accelDev = .1, magDev = 10;
+  
+  /*public void printAngle(){
+	  double x = getAngleX(), y = getAngleY(), z = getAngleZ();
+	  if (getData(x, 0, angleDev) || getData(y, 1, angleDev) || getData(z, 2, angleDev)){
+		  System.out.printf("--X--|--Y--|--Z--|\n------------------\n%05.2f|%05.2f|%05.2f|\n------------------\n", x ,y ,z);
+	  }
+  }*/
+  
+  public double rateOfChange(){
+	  double result = iniv[2];
+	  iniv[2] = getAngleZ();
+	  return iniv[2] - result;
+  }
   
   public void printAngle(){
 	  double x = getAngleX(), y = getAngleY(), z = getAngleZ();
 	  if (getData(x, 0, angleDev) || getData(y, 1, angleDev) || getData(z, 2, angleDev)){
-		  System.out.printf("--X--|--Y--|--Z--|\n------------------\n%05.2f|%05.2f|%05.2f|\n------------------\n", x ,y ,z);
+		  System.out.printf("%05.2f\n",z);
 	  }
   }
   public void printRate(){
