@@ -31,6 +31,11 @@ public class DriveSystem {
 		System.out.printf("%.2f || %.2f\n",fl.get(), fr.get());
 	}
 	
+	public void autoAngle(double heading){
+		right(-heading / 360);
+		left(heading / 360);
+	}
+	
 	public void autoMove(double speed, double heading){
 		right(speed - (heading / 360));
 		left(speed + (heading / 360));
