@@ -10,9 +10,9 @@ public class Comms {
 		table = NetworkTable.getTable("numTable");
 	}
 	
-	/*public void update(){
-		table.putNumber(", value)
+	public void update(double num){
+		table.putNumber("X", num);
 	}
-	*/
+	
 	
 }
