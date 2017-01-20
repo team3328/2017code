@@ -81,9 +81,9 @@ public class Robot extends IterativeRobot {
 	 */
 	@Override
 	public void teleopPeriodic() {
-		//imu.printAngle();
+		System.out.println(imu.getAngleZ());
 		//drive.controlledMove();
-		ult.printRange();
+		//ult.printRange();
 		
 	}
 
