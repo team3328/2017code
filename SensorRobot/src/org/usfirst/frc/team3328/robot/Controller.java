@@ -7,16 +7,20 @@ public class Controller {
 	
 	Joystick joy;
 	XboxController xbox;
+	
 	boolean joystick = true;
 	
 	public Controller(){
 		try{
 			joy = new Joystick(0);
 		}catch(Exception e){
+			System.out.println("xbox");
 			joystick = false;
 			xbox = new XboxController(0);
 		}
 	}
+	
+	
 	
 	public double getX(){
 		if (joystick)

@@ -20,6 +20,7 @@ public class Robot extends IterativeRobot {
 	DriveSystem drive;
 	Timer timer;
 	ADIS16448_IMU imu;
+	UltralightBeam ult;
 
 	/**
 	 * This function is run when the robot is first started up and should be
@@ -36,6 +37,7 @@ public class Robot extends IterativeRobot {
 		drive.init();
 		timer.reset();
 		imu.init();
+		ult = new UltralightBeam();
 	}
 
 	/**
@@ -71,7 +73,7 @@ public class Robot extends IterativeRobot {
 			// Put default auto code here
 			break;
 		}*/
-		drive.autoMove(0, imu.getAngleZ());
+		//drive.autoMove(0, imu.getAngleZ());
 	}
 
 	/**
@@ -80,7 +82,9 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void teleopPeriodic() {
 		//imu.printAngle();
-		drive.controlledMove();
+		//drive.controlledMove();
+		ult.printRange();
+		
 	}
 
 	/**

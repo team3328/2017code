@@ -585,7 +585,7 @@ public class ADIS16448_IMU extends GyroBase implements Gyro, PIDSource, LiveWind
   }
   
   public boolean getData(double data, int index, double deviation){
-	  if (data >= iniv[index] + deviation || data <= iniv[index] - deviation){
+	  if (Math.abs(data - iniv[index]) > deviation){
 		  iniv[index] = data;
 		  return true;
 	  }

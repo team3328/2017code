@@ -12,31 +12,36 @@ public class DriveSystem {
 	public void init(){
 		fl = new Talon(0);
 		fr = new Talon(1);
-		//bl = new Talon(2);
-		//br = new Talon(3);
+		bl = new Talon(2);
+		br = new Talon(3);
 		
 		con = new Controller();
 	}
 	
 	public void right(double speed){
 		fr.set(speed);
-		//br.set(speed);
+		br.set(speed);
 	}
 	public void left(double speed){
 		fl.set(speed);
-		//bl.set(speed);
+		bl.set(speed);
+	}
+	
+	public void printSpeed(){
+		System.out.printf("%.2f || %.2f\n",fl.get(), fr.get());
 	}
 	
 	public void autoMove(double speed, double heading){
-		double rs = speed - (heading / 360);
-		double ls = speed + (heading / 360);
-		System.out.printf("%.2f || %.2f\n",ls, rs);
-		right(rs);
-		left(ls);
+		right(speed - (heading / 360));
+		left(speed + (heading / 360));
 	}
 	
 	public void controlledMove(){
-		right(con.getX());
-		left(con.getY());
+		right(con.getX() - con.getY());
+		left(con.getX() + con.getY());
+	}
+	
+	public void printCon(){
+		System.out.println(con.getX());
 	}
 }
