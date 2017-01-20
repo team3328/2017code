@@ -440,6 +440,8 @@ public class ADIS16448_IMU extends GyroBase implements Gyro, PIDSource, LiveWind
         m_integ_gyro_x += (gyro_x - m_gyro_center_x) * dt;
         m_integ_gyro_y += (gyro_y - m_gyro_center_y) * dt;
         m_integ_gyro_z += (gyro_z - m_gyro_center_z) * dt;
+        
+        compAngle = compFilter(m_integ_gyro_z, gyro_z, accel_z, dt);
 
         m_ahrs_q1 = q1;
         m_ahrs_q2 = q2;
@@ -467,7 +469,13 @@ public class ADIS16448_IMU extends GyroBase implements Gyro, PIDSource, LiveWind
     if (m_spi == null) return 0.0;
     return getRateZ();
   }
-
+  
+  double compAngle;
+  
+  public double compFilter(double angle, double gyro, double acc, double dt){
+	  return .98 * (angle + (gyro * dt)) + (.02 * acc);
+  }
+  
   public synchronized double getAngleX() { //0
     return m_integ_gyro_x;
   }
@@ -555,7 +563,11 @@ public class ADIS16448_IMU extends GyroBase implements Gyro, PIDSource, LiveWind
   public synchronized double getQuaternionZ() { //21
     return m_ahrs_q4;
   }
-
+  
+  public synchronized double getCompAngleZ(){
+	  return compAngle;
+  }
+  
   double[] iniv = new double[]{
 		  getAngleX(),
 		  getAngleY(),
