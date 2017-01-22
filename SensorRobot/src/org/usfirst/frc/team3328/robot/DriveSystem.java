@@ -8,6 +8,7 @@ public class DriveSystem {
 	
 	Controller con;
 	
+	boolean toggleMode = false, slowMode = false;
 	
 	public void init(){
 		fl = new Talon(0);
@@ -36,14 +37,26 @@ public class DriveSystem {
 		left(heading / 360);
 	}
 	
-	public void autoMove(double speed, double heading){
+	public void angleMove(double speed, double heading){
 		right(speed - (heading / 360));
 		left(speed + (heading / 360));
 	}
 	
+	public void updateMode(){
+		toggleMode = con.getB1();
+		if (toggleMode)
+			slowMode = !slowMode;
+	}
+	
 	public void controlledMove(){
-		right(con.getX() - con.getY());
-		left(con.getX() + con.getY());
+		updateMode();
+		if (!slowMode){
+			right(con.getX() - con.getY());
+			left(con.getX() + con.getY());
+		}else{
+			right((con.getX() - con.getY()) / 10);
+			left((con.getX() + con.getY()) / 10);
+		}
 	}
 	
 	public void printCon(){
