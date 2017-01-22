@@ -15,7 +15,7 @@ public class DriveSystem {
 		bl = new Talon(2);
 		br = new Talon(3);
 		
-		con = new Controller();
+		con = new Controller(true);
 	}
 	
 	public void right(double speed){
