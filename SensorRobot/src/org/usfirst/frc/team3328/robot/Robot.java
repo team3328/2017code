@@ -21,6 +21,8 @@ public class Robot extends IterativeRobot {
 	Timer timer;
 	ADIS16448_IMU imu;
 	UltralightBeam ult;
+	Comms com;
+	Client client;
 
 	/**
 	 * This function is run when the robot is first started up and should be
@@ -34,10 +36,12 @@ public class Robot extends IterativeRobot {
 		drive = new DriveSystem();
 		timer = new Timer();
 		imu = new ADIS16448_IMU();
+		ult = new UltralightBeam();
+		com = new Comms();
+		client = new Client();
 		drive.init();
 		timer.reset();
 		imu.init();
-		ult = new UltralightBeam();
 	}
 
 	/**
@@ -81,10 +85,12 @@ public class Robot extends IterativeRobot {
 	 */
 	@Override
 	public void teleopPeriodic() {
-		System.out.println(imu.getAngleZ());
+		//System.out.printf("%05.2f || %05.2f\n", imu.rateOfChange(), imu.getAngleZ());
 		//drive.controlledMove();
 		//ult.printRange();
-		
+		com.update(imu.getAngleZ());
+		client.run();
+		//System.out.println(imu.compAngle);
 	}
 
 	/**
