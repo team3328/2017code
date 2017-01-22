@@ -1,14 +1,14 @@
 package org.usfirst.frc.team3328.robot;
 
 import edu.wpi.first.wpilibj.Joystick;
-import edu.wpi.first.wpilibj.XboxController;
 
 public class Controller {
 	
 	Joystick joy;
-	XboxController xbox;
+	Joystick xbox;
 	
 	boolean joystick;
+	
 	
 	public Controller(boolean type){
 		if(type){
@@ -16,23 +16,26 @@ public class Controller {
 			joy = new Joystick(0);
 		}else{
 			joystick = false;
-			xbox = new XboxController(0);
+			xbox = new Joystick(0);
 		}
 	}
-	
-	
 	
 	public double getX(){
 		if (joystick)
 			return joy.getX();
-		return xbox.getX();
+		return xbox.getRawAxis(2);
 	}
+	
 	public double getY(){
 		if (joystick)
 			return joy.getY();
-		return xbox.getY();
+		return xbox.getRawAxis(1);
 	}
 	
-	
+	public boolean getB1(){
+		if(joystick)
+			return joy.getRawButton(0);
+		return xbox.getRawButton(0);
+	}
 	
 }
