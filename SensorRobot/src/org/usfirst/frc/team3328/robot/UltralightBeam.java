@@ -15,10 +15,7 @@ public class UltralightBeam {
 	
 	public void printRange(){
 		inches = range();
-		if (Math.abs(inches - store) > 1){
-			store = inches;
 			System.out.printf("%05.2f\n", inches);
-		}
 	}
 	
 	public double range(){
