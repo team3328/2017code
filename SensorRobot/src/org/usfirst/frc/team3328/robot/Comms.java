@@ -11,7 +11,7 @@ public class Comms {
 	}
 	
 	public void update(double num){
-		table.putNumber("X", num);
+		table.putNumber("num", num);
 	}
 	
 	
