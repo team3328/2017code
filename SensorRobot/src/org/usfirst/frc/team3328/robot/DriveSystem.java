@@ -6,7 +6,7 @@ public class DriveSystem {
 	
 	Talon fl, fr, bl, br;
 	Controller con;
-	double restraint = 0;
+	double restraint = 1;
 	
 	//instantiates talons and controller
 	//sets controller to boolean to choose between joystick(true) or xbox(false)
