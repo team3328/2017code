@@ -34,9 +34,7 @@ public class Listener implements Runnable {
 			}
 		}
 	};*/
-	
-	//hello
-	
+
 	public void run(){
 		for(;;){
 			if (table.getNumber("angle", 0.0) == 500){
