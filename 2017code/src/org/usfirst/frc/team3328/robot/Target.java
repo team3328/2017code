@@ -1,6 +1,8 @@
 package org.usfirst.frc.team3328.robot;
 
-public class Target {
+import java.io.Serializable;
+
+public class Target implements Serializable{
 	
 	private double angle; 
 	private double distance;
@@ -10,19 +12,19 @@ public class Target {
 		return angle;
 	}
 	
-	public synchronized void setAngle(double ang){
+	public void setAngle(double ang){
 		angle = ang;
 	}
 	
-	public synchronized double getDistance(){
+	public double getDistance(){
 		return distance;
 	}
 	
-	public synchronized void setDistance(double dist){
+	public void setDistance(double dist){
 		distance = dist;
 	}
 	
-	public synchronized void setTime(long stamp){
+	public void setTime(long stamp){
 		time = stamp;
 	}
 	
