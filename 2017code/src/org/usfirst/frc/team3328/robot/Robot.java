@@ -1,23 +1,27 @@
 package org.usfirst.frc.team3328.robot;
 
 import edu.wpi.first.wpilibj.IterativeRobot;
+import edu.wpi.first.wpilibj.SpeedController;
+import edu.wpi.first.wpilibj.Talon;
 
 public class Robot extends IterativeRobot {
-	Controller xbox = new Controller(false);
-	DriveSystem drive = new DriveSystem(xbox);
+	SpeedController fl = new Talon(0);
+	SpeedController fr = new Talon(1);
+	SpeedController bl = new Talon(2);
+	SpeedController br = new Talon(3);
+	Controller xbox = new SteamWorksController(false);
+	DriveSystem drive = new SteamWorksDriveSystem(fl, fr, bl, br, xbox);
 	Climber climb = new Climber(xbox);
 	ADIS16448_IMU imu = new ADIS16448_IMU();
-	Controller cont = new Controller(false);
+	Controller cont = new SteamWorksController(false);
 	Comms comms = new Comms();
-	TargetService provider = new TargetService();
-	Target target = provider.provideTarget();
-	Listener listener;
+	Target target = new Target();
+	NetworkTablesTargetProvider targetProvider;
 
 	@Override
 	public void robotInit() {
-		listener = new Listener("listenerThread", target);
+		targetProvider = new NetworkTablesTargetProvider();
 		imu.init();
-		
 	}
 
 	@Override
@@ -32,10 +36,11 @@ public class Robot extends IterativeRobot {
 
 	@Override
 	public void teleopPeriodic() {
-		/*drive.controlledMove();
-		drive.printSpeed();*/
-		comms.update();
-		target.printValues();
+		drive.controlledMove();
+		drive.printSpeed();
+		/*comms.update();
+		target.printValues();*/
+		//System.out.println(drive.updateDisplacement(0, imu.getAngleZ()));
 	}
 
 	@Override
