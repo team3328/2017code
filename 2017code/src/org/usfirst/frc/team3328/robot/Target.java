@@ -4,6 +4,10 @@ import java.io.Serializable;
 
 public class Target implements Serializable{
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private double angle; 
 	private double distance;
 	private long lastTime = 0, time = 0;
