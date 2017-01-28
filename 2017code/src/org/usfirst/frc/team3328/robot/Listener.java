@@ -16,24 +16,12 @@ public class Listener implements Runnable {
 	public Listener(String name, Target object){
 		listener = new Thread(this, name);
 		target = object;
-		//NetworkTable.setClientMode();
 		NetworkTable.setIPAddress("172.22.11.2");
 		table = NetworkTable.getTable("JetsonData");
-		//table.addTableListener(list, false);
 		System.out.printf("Created thread %s\n", name);
 		listener.start();
 	}
 	
-	/*private final ITableListener list = new ITableListener(){
-		@Override
-		public void valueChanged(ITable source, String key, Object value, boolean isNew) {
-			if (key.equals("angle")){
-				angle = (double) value;
-			}else{
-				distance = (double) value;
-			}
-		}
-	};*/
 
 	public void run(){
 		for(;;){
