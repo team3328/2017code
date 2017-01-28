@@ -9,7 +9,6 @@ public class Robot extends IterativeRobot {
 	ADIS16448_IMU imu = new ADIS16448_IMU();
 	Controller cont = new Controller(false);
 	Comms comms = new Comms();
-	Client client = new Client();
 	TargetService provider = new TargetService();
 	Target target = provider.provideTarget();
 	Listener listener;
