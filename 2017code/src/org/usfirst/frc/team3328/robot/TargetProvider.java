@@ -1,11 +1,7 @@
 package org.usfirst.frc.team3328.robot;
 
-public class TargetService {
+public interface TargetProvider {
 	
-	Target target = new Target();
-	
-	public Target provideTarget(){
-		return target;
-	}
+	public Target getTarget();
 
 }
