@@ -4,7 +4,9 @@ public interface DriveSystem {
 
 	//formats and prints the value that the speed controllers are receiving.
 	void printSpeed();
-
+	
+	double getSpeed();
+	
 	//gets displacement between the desired angle and the current angle
 	//normalizes displacement so it's between 0 - 1
 	//rounds displacement off to 2 decimal places
