@@ -37,7 +37,6 @@ public class FakeController implements Controller {
 		return false;
 	}
 
-	@Override
 	public double getPad() {
 		// TODO Auto-generated method stub
 		return 0;
