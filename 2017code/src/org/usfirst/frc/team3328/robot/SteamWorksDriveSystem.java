@@ -1,7 +1,6 @@
 package org.usfirst.frc.team3328.robot;
 
 import edu.wpi.first.wpilibj.SpeedController;
-import edu.wpi.first.wpilibj.Talon;
 
 public class SteamWorksDriveSystem implements DriveSystem {
 	
@@ -10,6 +9,7 @@ public class SteamWorksDriveSystem implements DriveSystem {
 	private double restraint = 1;
 	private double factor = 1.1;
 	private double displacement;
+	private double speed;
 	private boolean active = true;
 	
 	//instantiates talons assigns controller to "con"
@@ -20,6 +20,13 @@ public class SteamWorksDriveSystem implements DriveSystem {
 		br = backRight;
 		
 		con = controller;
+	}
+	
+	@Override
+	public double getSpeed(){
+		speed = ((con.getX() + con.getY()) / restraint) * 10;
+		speed = (speed * speed) / 100;
+		return speed;
 	}
 	
 	//sets the right set of talons to the same value
@@ -39,12 +46,11 @@ public class SteamWorksDriveSystem implements DriveSystem {
 	private void stop(){
 		fl.set(0);
 		bl.set(0);
+		fr.set(0);
+		br.set(0);
 	}
 	
 	//formats and prints the value that the speed controllers are receiving.
-	/* (non-Javadoc)
-	 * @see org.usfirst.frc.team3328.robot.DriveSystem#printSpeed()
-	 */
 	@Override
 	public void printSpeed(){
 		System.out.printf("%.2f || %.2f\n",fl.get(), fr.get());
@@ -86,13 +92,9 @@ public class SteamWorksDriveSystem implements DriveSystem {
 	//normalizes displacement so it's between 0 - 1
 	//rounds displacement off to 2 decimal places
 	//all values above 0 and below .05 are set to .05
-	/* (non-Javadoc)
-	 * @see org.usfirst.frc.team3328.robot.DriveSystem#updateDisplacement(double, double)
-	 */
 	@Override
 	public double updateDisplacement(double desired, double current){
 		displacement = (current - desired) / 360;
-		displacement = Math.round(displacement * 100) / 100;
 		if (displacement > 0 && displacement < .05){
 			displacement = .05;
 		}
@@ -102,9 +104,6 @@ public class SteamWorksDriveSystem implements DriveSystem {
 	//Uses the gyro to turn until it reaches a desired angle.
 	//should work while moving and while stopped
 	//the speed of each side is separately adjusted using the displacement
-	/* (non-Javadoc)
-	 * @see org.usfirst.frc.team3328.robot.DriveSystem#autoAngle(double, double, double)
-	 */
 	@Override
 	public void autoAngle(double speed, double current, double desired){
 		updateFactor();
@@ -114,9 +113,6 @@ public class SteamWorksDriveSystem implements DriveSystem {
 		left((speed - displacement) * factor);
 	}
 	
-	/* (non-Javadoc)
-	 * @see org.usfirst.frc.team3328.robot.DriveSystem#autoMove(double)
-	 */
 	@Override
 	public void autoMove(double distance){
 		//accelerates and decelerates smoothly and quickly across a given distance, PID
@@ -125,9 +121,6 @@ public class SteamWorksDriveSystem implements DriveSystem {
 	
 	//updates the value of "restraint"
 	//sets each motor to the appropriate speed adjusted by the restraint
-	/* (non-Javadoc)
-	 * @see org.usfirst.frc.team3328.robot.DriveSystem#controlledMove()
-	 */
 	@Override
 	public void controlledMove(){
 		if (driveActive()){
