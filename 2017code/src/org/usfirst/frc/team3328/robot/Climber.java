@@ -1,15 +1,15 @@
 package org.usfirst.frc.team3328.robot;
 
-import edu.wpi.first.wpilibj.Talon;
+import edu.wpi.first.wpilibj.SpeedController;
 
 public class Climber {
 	
 	Controller con;
-	Talon talon;
+	SpeedController talon;
 	boolean active = false;
 	
-	public Climber(Controller controller){
-		talon = new Talon(5);
+	public Climber(SpeedController speedController, Controller controller){
+		talon = speedController;
 		con = controller;
 	}
 	
