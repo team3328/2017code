@@ -1,10 +1,7 @@
 package org.usfirst.frc.team3328.robot;
 
 import static org.junit.Assert.*;
-
 import org.junit.Test;
-
-import edu.wpi.first.wpilibj.SpeedController;
 
 public class SteamWorksDriveSystemTest {
 	
@@ -30,7 +27,12 @@ public class SteamWorksDriveSystemTest {
 		assertEquals(drive.updateDisplacement(0, imu.getAngleZ()), .05, 0);
 	}
 	
-	
+	@Test
+	public void autoAngle_robotTurnedRight_rightMotorTurnsForwards(){
+		imu.setAngleZ(20);
+		drive.autoAngle(0, imu.getAngleZ(), 0);
+		assertTrue(fr.speed < 0 && br.speed < 0);
+	}
 	
 }
 	
