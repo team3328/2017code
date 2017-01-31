@@ -9,10 +9,11 @@ public class Robot extends IterativeRobot {
 	SpeedController fr;
 	SpeedController bl;
 	SpeedController br;
+	SpeedController climbControl;
 	Controller xbox;
 	DriveSystem drive;
 	Climber climb;
-	ADIS16448_IMU imu;
+	IMU imu;
 	Controller cont;
 	Comms comms;
 	Target target;
@@ -24,11 +25,11 @@ public class Robot extends IterativeRobot {
 		fr = new Talon(1);
 		bl = new Talon(2);
 		br = new Talon(3);
-		xbox = new SteamWorksController(false);
+		climbControl = new Talon(4);
+		xbox = new SteamWorksXbox();
 		drive = new SteamWorksDriveSystem(fl, fr, bl, br, xbox);
-		climb = new Climber(xbox);
+		climb = new Climber(climbControl, xbox);
 		imu = new ADIS16448_IMU();
-		cont = new SteamWorksController(false);
 		comms = new Comms();
 		target = new Target();
 		targetProvider = new NetworkTablesTargetProvider();
@@ -47,11 +48,11 @@ public class Robot extends IterativeRobot {
 
 	@Override
 	public void teleopPeriodic() {
-		/*drive.controlledMove();
-		drive.printSpeed();*/
+		drive.controlledMove();
+		drive.printSpeed();
 		/*comms.update();
 		target.printValues();*/
-		//System.out.println(drive.updateDisplacement(0, imu.getAngleZ()));
+		//System.out.println(drive.getSpeed());
 	}
 
 	@Override
