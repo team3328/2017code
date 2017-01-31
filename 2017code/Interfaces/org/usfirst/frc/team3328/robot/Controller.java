@@ -15,6 +15,4 @@ public interface Controller {
 
 	boolean getButtonPress(int num);
 
-	double getPad();
-
 }
