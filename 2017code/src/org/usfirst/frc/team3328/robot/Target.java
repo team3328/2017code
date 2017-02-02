@@ -8,16 +8,18 @@ public class Target implements Serializable{
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	private double angle; 
+	private double pixel; 
 	private double distance;
 	private long lastTime = 0, time = 0;
+	private boolean status = false;
 	
-	public synchronized double getAngle(){
-		return angle;
+	public double getPixel(){
+		return pixel;
 	}
 	
-	public void setAngle(double ang){
-		angle = ang;
+	public void setPixel(double ang){
+		//System.out.println("set pixel to " + ang);
+		pixel = ang;
 	}
 	
 	public double getDistance(){
@@ -26,6 +28,14 @@ public class Target implements Serializable{
 	
 	public void setDistance(double dist){
 		distance = dist;
+	}
+	
+	public void setStatus(boolean stat){
+		status = stat;
+	}
+	
+	public boolean getStatus(){
+		return status;
 	}
 	
 	public void setTime(long stamp){
@@ -42,6 +52,6 @@ public class Target implements Serializable{
 	}
 	
 	public void printValues(){
-		System.out.printf("Angle: %.2f || Distance: %.2f || New: %b\n", getAngle(), getDistance(), isNew());
+		System.out.printf("Pixel: %06.2f || Distance: %.2f || New: %b || Status: %b\n", getPixel(), getDistance(), isNew(), getStatus());
 	}
 }
