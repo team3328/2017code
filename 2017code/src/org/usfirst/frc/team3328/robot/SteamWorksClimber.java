@@ -2,13 +2,13 @@ package org.usfirst.frc.team3328.robot;
 
 import edu.wpi.first.wpilibj.SpeedController;
 
-public class Climber {
+public class SteamWorksClimber implements Climber {
 	
 	Controller con;
 	SpeedController talon;
 	boolean active = false;
 	
-	public Climber(SpeedController speedController, Controller controller){
+	public SteamWorksClimber(SpeedController speedController, Controller controller){
 		talon = speedController;
 		con = controller;
 	}
@@ -33,6 +33,10 @@ public class Climber {
 		return active;
 	}
 	
+	/* (non-Javadoc)
+	 * @see org.usfirst.frc.team3328.robot.Climber#driverControl()
+	 */
+	@Override
 	public void driverControl(){
 		if (isActive()){
 			if (con.getX() > 0){
