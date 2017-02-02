@@ -13,7 +13,8 @@ public class SteamWorksDriveSystem implements DriveSystem {
 	private boolean active = true;
 	
 	//instantiates talons assigns controller to "con"
-	public SteamWorksDriveSystem(SpeedController frontLeft, SpeedController frontRight, SpeedController backLeft, SpeedController backRight, Controller controller){
+	public SteamWorksDriveSystem(SpeedController frontLeft, SpeedController frontRight, 
+			SpeedController backLeft, SpeedController backRight, Controller controller){
 		fl = frontLeft;
 		fr = frontRight;
 		bl = backLeft;
@@ -48,6 +49,13 @@ public class SteamWorksDriveSystem implements DriveSystem {
 		bl.set(0);
 		fr.set(0);
 		br.set(0);
+	}
+	
+	@Override
+	//moves the robot
+	public void move(double left, double right){
+		right(right);
+		left(left);
 	}
 	
 	//formats and prints the value that the speed controllers are receiving.
@@ -113,9 +121,19 @@ public class SteamWorksDriveSystem implements DriveSystem {
 		left((speed - displacement) * factor);
 	}
 	
+	//takes a pixel offset to aim the robot
+	//turns until it's within a 4 pixel range of target
+	//turns at .2 if >50, .1 if < 50
 	@Override
-	public void autoMove(double distance){
-		//accelerates and decelerates smoothly and quickly across a given distance, PID
+	public void track(double pixel){
+		double sp = .08;
+		if (pixel > 350){
+				move(sp, -sp);
+		}else if (pixel < 290){
+				move(-sp, sp);
+		}else{
+			stop();
+		}
 	}
 	
 	
@@ -125,8 +143,8 @@ public class SteamWorksDriveSystem implements DriveSystem {
 	public void controlledMove(){
 		if (driveActive()){
 			restrain();
-			right((con.getX() - con.getY()) / restraint);
-			left((con.getX() + con.getY()) / restraint);
+			move((con.getX() + con.getY()) / restraint, 
+				(con.getX() - con.getY()) / restraint);
 		}else{
 			stop();
 		}
