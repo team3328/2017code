@@ -21,7 +21,7 @@ import edu.wpi.first.wpilibj.Timer;
 /**
  * This class is for the ADIS16448 IMU that connects to the RoboRIO MXP port.
  */
-public class ADIS16448_IMU extends GyroBase implements Gyro, PIDSource, LiveWindowSendable {
+public class ADIS16448_IMU extends GyroBase implements Gyro, PIDSource, LiveWindowSendable, IMU {
   private static final double kTimeout = 0.1;
   private static final double kCalibrationSampleTime = 5.0;
   private static final double kDegreePerSecondPerLSB = 1.0/25.0;
@@ -147,9 +147,9 @@ public class ADIS16448_IMU extends GyroBase implements Gyro, PIDSource, LiveWind
     LiveWindow.addSensor("ADIS16448_IMU", 0, this);
   }
 
-  /**
-   * {@inheritDoc}
-   */
+  /* (non-Javadoc)
+ * @see org.usfirst.frc.team3328.robot.IMU#calibrate()
+ */
   @Override
   public void calibrate() {
     if (m_spi == null) return;
@@ -196,10 +196,11 @@ public class ADIS16448_IMU extends GyroBase implements Gyro, PIDSource, LiveWind
     m_spi.write(buf, 2);
   }
 
-  /**
-   * {@inheritDoc}
-   */
-  public void reset() {
+  /* (non-Javadoc)
+ * @see org.usfirst.frc.team3328.robot.IMU#reset()
+ */
+  @Override
+public void reset() {
     synchronized (this) {
       m_integ_gyro_x = 0.0;
       m_integ_gyro_y = 0.0;
@@ -207,9 +208,9 @@ public class ADIS16448_IMU extends GyroBase implements Gyro, PIDSource, LiveWind
     }
   }
 
-  /**
-   * Delete (free) the spi port used for the IMU.
-   */
+  /* (non-Javadoc)
+ * @see org.usfirst.frc.team3328.robot.IMU#free()
+ */
   @Override
   public void free() {
     m_freed.set(true);
@@ -454,112 +455,206 @@ public class ADIS16448_IMU extends GyroBase implements Gyro, PIDSource, LiveWind
     }
   }
 
-  /**
-   * {@inheritDoc}
-   */
-  public double getAngle() {
+  /* (non-Javadoc)
+ * @see org.usfirst.frc.team3328.robot.IMU#getAngle()
+ */
+  @Override
+public double getAngle() {
     if (m_spi == null) return 0.0;
     return getYaw();
   }
 
-  /**
-   * {@inheritDoc}
-   */
-  public double getRate() {
+  /* (non-Javadoc)
+ * @see org.usfirst.frc.team3328.robot.IMU#getRate()
+ */
+  @Override
+public double getRate() {
     if (m_spi == null) return 0.0;
     return getRateZ();
   }
   
   
-  public synchronized double getAngleX() { //0
+  /* (non-Javadoc)
+ * @see org.usfirst.frc.team3328.robot.IMU#getAngleX()
+ */
+@Override
+public synchronized double getAngleX() { //0
     return m_integ_gyro_x;
   }
 
-  public synchronized double getAngleY() { //1
+  /* (non-Javadoc)
+ * @see org.usfirst.frc.team3328.robot.IMU#getAngleY()
+ */
+@Override
+public synchronized double getAngleY() { //1
     return m_integ_gyro_y;
   }
 
-  public synchronized double getAngleZ() { //2
+  /* (non-Javadoc)
+ * @see org.usfirst.frc.team3328.robot.IMU#getAngleZ()
+ */
+@Override
+public synchronized double getAngleZ() { //2
     return m_integ_gyro_z;
   }
 
-  public synchronized double getRateX() { //3
+  /* (non-Javadoc)
+ * @see org.usfirst.frc.team3328.robot.IMU#getRateX()
+ */
+@Override
+public synchronized double getRateX() { //3
     return m_gyro_x;
   }
 
-  public synchronized double getRateY() { //4
+  /* (non-Javadoc)
+ * @see org.usfirst.frc.team3328.robot.IMU#getRateY()
+ */
+@Override
+public synchronized double getRateY() { //4
     return m_gyro_y;
   }
 
-  public synchronized double getRateZ() { //5
+  /* (non-Javadoc)
+ * @see org.usfirst.frc.team3328.robot.IMU#getRateZ()
+ */
+@Override
+public synchronized double getRateZ() { //5
     return m_gyro_z;
   }
 
-  public synchronized double getAccelX() { //6
+  /* (non-Javadoc)
+ * @see org.usfirst.frc.team3328.robot.IMU#getAccelX()
+ */
+@Override
+public synchronized double getAccelX() { //6
     return m_accel_x;
   }
 
-  public synchronized double getAccelY() { //7
+  /* (non-Javadoc)
+ * @see org.usfirst.frc.team3328.robot.IMU#getAccelY()
+ */
+@Override
+public synchronized double getAccelY() { //7
     return m_accel_y;
   }
 
-  public synchronized double getAccelZ() { //8
+  /* (non-Javadoc)
+ * @see org.usfirst.frc.team3328.robot.IMU#getAccelZ()
+ */
+@Override
+public synchronized double getAccelZ() { //8
     return m_accel_z;
   }
 
-  public synchronized double getMagX() { //9
+  /* (non-Javadoc)
+ * @see org.usfirst.frc.team3328.robot.IMU#getMagX()
+ */
+@Override
+public synchronized double getMagX() { //9
     return m_mag_x;
   }
 
-  public synchronized double getMagY() { //10
+  /* (non-Javadoc)
+ * @see org.usfirst.frc.team3328.robot.IMU#getMagY()
+ */
+@Override
+public synchronized double getMagY() { //10
     return m_mag_y;
   }
 
-  public synchronized double getMagZ() { //11
+  /* (non-Javadoc)
+ * @see org.usfirst.frc.team3328.robot.IMU#getMagZ()
+ */
+@Override
+public synchronized double getMagZ() { //11
     return m_mag_z;
   }
 
-  public synchronized double getPitch() { //12
+  /* (non-Javadoc)
+ * @see org.usfirst.frc.team3328.robot.IMU#getPitch()
+ */
+@Override
+public synchronized double getPitch() { //12
     return m_pitch;
   }
 
-  public synchronized double getRoll() { //13
+  /* (non-Javadoc)
+ * @see org.usfirst.frc.team3328.robot.IMU#getRoll()
+ */
+@Override
+public synchronized double getRoll() { //13
     return m_roll;
   }
 
-  public synchronized double getYaw() { //14
+  /* (non-Javadoc)
+ * @see org.usfirst.frc.team3328.robot.IMU#getYaw()
+ */
+@Override
+public synchronized double getYaw() { //14
     return m_yaw;
   }
 
-  public synchronized double getLastSampleTime() { //15
+  /* (non-Javadoc)
+ * @see org.usfirst.frc.team3328.robot.IMU#getLastSampleTime()
+ */
+@Override
+public synchronized double getLastSampleTime() { //15
     return m_last_sample_time;
   }
 
-  public synchronized double getBarometricPressure() { //16
+  /* (non-Javadoc)
+ * @see org.usfirst.frc.team3328.robot.IMU#getBarometricPressure()
+ */
+@Override
+public synchronized double getBarometricPressure() { //16
     return m_baro;
   }
 
-  public synchronized double getTemperature() { //17
+  /* (non-Javadoc)
+ * @see org.usfirst.frc.team3328.robot.IMU#getTemperature()
+ */
+@Override
+public synchronized double getTemperature() { //17
     return m_temp;
   }
 
-  public synchronized double getQuaternionW() { //18
+  /* (non-Javadoc)
+ * @see org.usfirst.frc.team3328.robot.IMU#getQuaternionW()
+ */
+@Override
+public synchronized double getQuaternionW() { //18
     return m_ahrs_q1;
   }
 
-  public synchronized double getQuaternionX() { //19
+  /* (non-Javadoc)
+ * @see org.usfirst.frc.team3328.robot.IMU#getQuaternionX()
+ */
+@Override
+public synchronized double getQuaternionX() { //19
     return m_ahrs_q2;
   }
 
-  public synchronized double getQuaternionY() { //20
+  /* (non-Javadoc)
+ * @see org.usfirst.frc.team3328.robot.IMU#getQuaternionY()
+ */
+@Override
+public synchronized double getQuaternionY() { //20
     return m_ahrs_q3;
   }
 
-  public synchronized double getQuaternionZ() { //21
+  /* (non-Javadoc)
+ * @see org.usfirst.frc.team3328.robot.IMU#getQuaternionZ()
+ */
+@Override
+public synchronized double getQuaternionZ() { //21
     return m_ahrs_q4;
   }
   
-  public synchronized double getCompAngleZ(){
+  /* (non-Javadoc)
+ * @see org.usfirst.frc.team3328.robot.IMU#getCompAngleZ()
+ */
+@Override
+public synchronized double getCompAngleZ(){
 	  return compAngle;
   }
   
@@ -588,11 +683,19 @@ public class ADIS16448_IMU extends GyroBase implements Gyro, PIDSource, LiveWind
 		  getQuaternionZ(),
 		  m_integ_gyro_z};
 
-  public void init() {
+  /* (non-Javadoc)
+ * @see org.usfirst.frc.team3328.robot.IMU#init()
+ */
+@Override
+public void init() {
 	  calibrate();  
   }
   
-  public boolean getData(double data, int index, double deviation){
+  /* (non-Javadoc)
+ * @see org.usfirst.frc.team3328.robot.IMU#getData(double, int, double)
+ */
+@Override
+public boolean getData(double data, int index, double deviation){
 	  if (data > iniv[index] + deviation || data < iniv[index] - deviation){
 		  iniv[index] = data;
 		  return true;
@@ -609,7 +712,11 @@ public class ADIS16448_IMU extends GyroBase implements Gyro, PIDSource, LiveWind
 	  }
   }*/
   
-  public double rateOfChange(){
+  /* (non-Javadoc)
+ * @see org.usfirst.frc.team3328.robot.IMU#rateOfChange()
+ */
+@Override
+public double rateOfChange(){
 	  double result = iniv[2];
 	  iniv[2] = getAngleZ();
 	  return iniv[2] - result;
@@ -617,39 +724,59 @@ public class ADIS16448_IMU extends GyroBase implements Gyro, PIDSource, LiveWind
   
   double compAngle;
   
-  public double compFilter(double angle, double gyro, double acc, double dt){
+  /* (non-Javadoc)
+ * @see org.usfirst.frc.team3328.robot.IMU#compFilter(double, double, double, double)
+ */
+@Override
+public double compFilter(double angle, double gyro, double acc, double dt){
 	  iniv[22] = .98 * (angle + (gyro * dt)) + (.02 * acc);
 	  return iniv[22];
   }
   
-  public void printAngle(){
+  /* (non-Javadoc)
+ * @see org.usfirst.frc.team3328.robot.IMU#printAngle()
+ */
+@Override
+public void printAngle(){
 	  double x = getAngleX(), y = getAngleY(), z = getAngleZ();
 	  if (getData(x, 0, angleDev) || getData(y, 1, angleDev) || getData(z, 2, angleDev)){
 		  System.out.printf("%05.2f\n",z);
 	  }
   }
-  public void printRate(){
+  /* (non-Javadoc)
+ * @see org.usfirst.frc.team3328.robot.IMU#printRate()
+ */
+@Override
+public void printRate(){
 	  double x = getRateX(), y = getRateY(), z = getRateZ();
 	  if (getData(x, 0, rateDev) || getData(y, 1, rateDev) || getData(z, 2, rateDev)){
 		  System.out.printf("--X--|--Y--|--Z--|\n------------------\n%05.2f|%05.2f|%05.2f|\n------------------\n", x ,y ,z);
 	  }
   }
-  public void printAccel(){
+  /* (non-Javadoc)
+ * @see org.usfirst.frc.team3328.robot.IMU#printAccel()
+ */
+@Override
+public void printAccel(){
 	  double x = getAccelX(), y = getAccelY(), z = getAccelZ();
 	  if (getData(x, 6, accelDev) || getData(y, 7, accelDev) || getData(z, 8, accelDev)){
 		  System.out.printf("--X--|--Y--|--Z--|\n------------------\n%05.3f|%05.3f|%05.3f|\n------------------\n", x ,y ,z);
 	  }
   }
-  public void printMag(){
+  /* (non-Javadoc)
+ * @see org.usfirst.frc.team3328.robot.IMU#printMag()
+ */
+@Override
+public void printMag(){
 	  int x = (int)getMagX(), y = (int)getMagY(), z = (int)getMagZ();
 	  if (getData(x, 9, magDev) || getData(y, 10, magDev) || getData(z, 11, magDev)){
 		  System.out.printf("--X--|--Y--|--Z--|\n------------------\n%05d|%05d|%05d|\n------------------\n", x ,y ,z);
 	  }
   }
   
-  /**
-   * {@inheritDoc}
-   */
+  /* (non-Javadoc)
+ * @see org.usfirst.frc.team3328.robot.IMU#updateTable()
+ */
   @Override
   public void updateTable() {
     ITable table = getTable();

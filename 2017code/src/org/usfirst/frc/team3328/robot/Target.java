@@ -1,28 +1,44 @@
 package org.usfirst.frc.team3328.robot;
 
-public class Target {
+import java.io.Serializable;
+
+public class Target implements Serializable{
 	
-	private double angle; 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	private double pixel; 
 	private double distance;
 	private long lastTime = 0, time = 0;
+	private boolean status = false;
 	
-	public synchronized double getAngle(){
-		return angle;
+	public double getPixel(){
+		return pixel;
 	}
 	
-	public synchronized void setAngle(double ang){
-		angle = ang;
+	public void setPixel(double ang){
+		//System.out.println("set pixel to " + ang);
+		pixel = ang;
 	}
 	
-	public synchronized double getDistance(){
+	public double getDistance(){
 		return distance;
 	}
 	
-	public synchronized void setDistance(double dist){
+	public void setDistance(double dist){
 		distance = dist;
 	}
 	
-	public synchronized void setTime(long stamp){
+	public void setStatus(boolean stat){
+		status = stat;
+	}
+	
+	public boolean getStatus(){
+		return status;
+	}
+	
+	public void setTime(long stamp){
 		time = stamp;
 	}
 	
@@ -36,6 +52,6 @@ public class Target {
 	}
 	
 	public void printValues(){
-		System.out.printf("Angle: %.2f || Distance: %.2f || New: %b\n", getAngle(), getDistance(), isNew());
+		System.out.printf("Pixel: %06.2f || Distance: %.2f || New: %b || Status: %b\n", getPixel(), getDistance(), isNew(), getStatus());
 	}
 }
