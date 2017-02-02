@@ -32,6 +32,7 @@ public class SteamWorksDriveSystemTest {
 		imu.setAngleZ(20);
 		drive.autoAngle(0, imu.getAngleZ(), 0);
 		assertTrue(fr.speed < 0 && br.speed < 0);
+		
 	}
 	
 }
