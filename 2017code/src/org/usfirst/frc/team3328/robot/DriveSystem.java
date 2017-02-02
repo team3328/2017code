@@ -17,8 +17,10 @@ public interface DriveSystem {
 	//should work while moving and while stopped
 	//the speed of each side is separately adjusted using the displacement
 	void autoAngle(double speed, double current, double desired);
-
-	void autoMove(double distance);
+	
+	void track(double offset);
+	
+	void move(double left, double right);
 
 	//updates the value of "restraint"
 	//sets each motor to the appropriate speed adjusted by the restraint
