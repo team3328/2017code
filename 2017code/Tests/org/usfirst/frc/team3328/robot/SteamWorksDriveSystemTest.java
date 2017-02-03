@@ -4,6 +4,7 @@ import static org.junit.Assert.*;
 import org.junit.Test;
 import org.usfirst.frc.team3328.robot.subsystems.SteamWorksDriveSystem;
 import org.usfirst.frc.team3328.robot.utilities.DriveEncoders;
+import org.usfirst.frc.team3328.robot.utilities.DriveTalons;
 
 public class SteamWorksDriveSystemTest {
 	
@@ -13,8 +14,9 @@ public class SteamWorksDriveSystemTest {
 	FakeSpeedController fr = new FakeSpeedController();
 	FakeSpeedController bl = new FakeSpeedController();
 	FakeSpeedController br = new FakeSpeedController();
+	DriveTalons talons = new DriveTalons(fl, fr, bl, br);
 	FakeADIS16448_IMU imu = new FakeADIS16448_IMU();
-	SteamWorksDriveSystem drive = new SteamWorksDriveSystem(encoders, fl, fr, bl, br, fakeCont);
+	SteamWorksDriveSystem drive = new SteamWorksDriveSystem(encoders, talons, fakeCont);
 
 	@Test
 	public void controlledMove_yLargerThanX_rightMotorTurnsBackwards() {
