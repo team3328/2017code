@@ -1,4 +1,7 @@
-package org.usfirst.frc.team3328.robot;
+package org.usfirst.frc.team3328.robot.subsystems;
+
+import org.usfirst.frc.team3328.robot.utilities.Controller;
+import org.usfirst.frc.team3328.robot.utilities.DriveEncoders;
 
 import edu.wpi.first.wpilibj.SpeedController;
 
@@ -13,7 +16,7 @@ public class SteamWorksDriveSystem implements DriveSystem {
 	private boolean active = true;
 	
 	//instantiates talons assigns controller to "con"
-	public SteamWorksDriveSystem(SpeedController frontLeft, SpeedController frontRight, 
+	public SteamWorksDriveSystem(DriveEncoders encoders, SpeedController frontLeft, SpeedController frontRight, 
 			SpeedController backLeft, SpeedController backRight, Controller controller){
 		fl = frontLeft;
 		fr = frontRight;
@@ -67,10 +70,10 @@ public class SteamWorksDriveSystem implements DriveSystem {
 	
 	//Dynamic updating for strength of angle correction during auto
 	private void updateFactor(){
-		if (con.getButton(1) && factor > 1){
+		if (con.getButtonRelease(1) && factor > 1){
 			factor -= .1;
 		}
-		if (con.getButton(2) && factor < 10){
+		if (con.getButtonRelease(2) && factor < 10){
 			factor += .1;
 		}
 	}
@@ -79,17 +82,17 @@ public class SteamWorksDriveSystem implements DriveSystem {
 	//the left and right bumpers lower and raise "restraint" respectively
 	//"restraint" is confined between 10 & 1
 	private void restrain(){
-		if (con.getButton(5) && restraint > 1){
+		if (con.getButtonRelease(5) && restraint > 1){
 			restraint -= 1;
 		}
-		if (con.getButton(6) && restraint < 10){
+		if (con.getButtonRelease(6) && restraint < 10){
 			restraint += 1;
 		}
 	}
 	
 	//toggles drive off and the climb system on because they share controlls
 	private boolean driveActive(){
-		if (con.getButton(1)){
+		if (con.getButtonRelease(1)){
 			active = !active;
 			System.out.println("driveMode: " + active);
 		}

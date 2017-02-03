@@ -1,4 +1,6 @@
-package org.usfirst.frc.team3328.robot;
+package org.usfirst.frc.team3328.robot.subsystems;
+
+import org.usfirst.frc.team3328.robot.utilities.Controller;
 
 import edu.wpi.first.wpilibj.SpeedController;
 
@@ -26,7 +28,7 @@ public class SteamWorksClimber implements Climber {
 	}
 	
 	private boolean isActive(){
-		if (con.getButton(1)){
+		if (con.getButtonRelease(1)){
 			active = !active;
 			System.out.println("Climber: " + active);
 		}

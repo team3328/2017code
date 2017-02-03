@@ -1,4 +1,4 @@
-package org.usfirst.frc.team3328.robot;
+package org.usfirst.frc.team3328.robot.utilities;
 import java.nio.ByteOrder;
 import java.nio.ByteBuffer;
 import java.util.concurrent.atomic.AtomicBoolean;
