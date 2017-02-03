@@ -1,4 +1,4 @@
-package org.usfirst.frc.team3328.robot;
+package org.usfirst.frc.team3328.robot.utilities;
 
 import edu.wpi.first.wpilibj.Joystick;
 
@@ -28,7 +28,7 @@ public class SteamWorksJoystick implements Controller {
 	
 	//returns true when the button with the index "num" has been released
 	@Override
-	public boolean getButton(int num){
+	public boolean getButtonRelease(int num){
 		if (joy.getRawButton(num) &&  !button[num]){
 			button[num] = joy.getRawButton(num);
 			return true;

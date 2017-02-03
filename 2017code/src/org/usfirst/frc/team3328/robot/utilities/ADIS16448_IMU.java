@@ -1,4 +1,4 @@
-package org.usfirst.frc.team3328.robot;
+package org.usfirst.frc.team3328.robot.utilities;
 import java.nio.ByteOrder;
 import java.nio.ByteBuffer;
 import java.util.concurrent.atomic.AtomicBoolean;
@@ -90,7 +90,7 @@ public class ADIS16448_IMU extends GyroBase implements Gyro, PIDSource, LiveWind
       this.imu = imu;
     }
 
-    @Override
+    
     public void run() {
       imu.calculate();
     }
@@ -147,11 +147,8 @@ public class ADIS16448_IMU extends GyroBase implements Gyro, PIDSource, LiveWind
     LiveWindow.addSensor("ADIS16448_IMU", 0, this);
   }
 
-  /* (non-Javadoc)
- * @see org.usfirst.frc.team3328.robot.IMU#calibrate()
- */
-  @Override
-  public void calibrate() {
+@Override
+public void calibrate() {
     if (m_spi == null) return;
 
     Timer.delay(0.1);
@@ -196,10 +193,7 @@ public class ADIS16448_IMU extends GyroBase implements Gyro, PIDSource, LiveWind
     m_spi.write(buf, 2);
   }
 
-  /* (non-Javadoc)
- * @see org.usfirst.frc.team3328.robot.IMU#reset()
- */
-  @Override
+@Override
 public void reset() {
     synchronized (this) {
       m_integ_gyro_x = 0.0;
@@ -208,11 +202,8 @@ public void reset() {
     }
   }
 
-  /* (non-Javadoc)
- * @see org.usfirst.frc.team3328.robot.IMU#free()
- */
-  @Override
-  public void free() {
+@Override
+public void free() {
     m_freed.set(true);
     try {
       m_task.join();
@@ -455,204 +446,128 @@ public void reset() {
     }
   }
 
-  /* (non-Javadoc)
- * @see org.usfirst.frc.team3328.robot.IMU#getAngle()
- */
-  @Override
+@Override
 public double getAngle() {
     if (m_spi == null) return 0.0;
     return getYaw();
   }
 
-  /* (non-Javadoc)
- * @see org.usfirst.frc.team3328.robot.IMU#getRate()
- */
-  @Override
+@Override
 public double getRate() {
     if (m_spi == null) return 0.0;
     return getRateZ();
   }
   
-  
-  /* (non-Javadoc)
- * @see org.usfirst.frc.team3328.robot.IMU#getAngleX()
- */
 @Override
 public synchronized double getAngleX() { //0
     return m_integ_gyro_x;
   }
 
-  /* (non-Javadoc)
- * @see org.usfirst.frc.team3328.robot.IMU#getAngleY()
- */
 @Override
 public synchronized double getAngleY() { //1
     return m_integ_gyro_y;
   }
 
-  /* (non-Javadoc)
- * @see org.usfirst.frc.team3328.robot.IMU#getAngleZ()
- */
 @Override
 public synchronized double getAngleZ() { //2
     return m_integ_gyro_z;
   }
 
-  /* (non-Javadoc)
- * @see org.usfirst.frc.team3328.robot.IMU#getRateX()
- */
 @Override
 public synchronized double getRateX() { //3
     return m_gyro_x;
   }
 
-  /* (non-Javadoc)
- * @see org.usfirst.frc.team3328.robot.IMU#getRateY()
- */
 @Override
 public synchronized double getRateY() { //4
     return m_gyro_y;
   }
 
-  /* (non-Javadoc)
- * @see org.usfirst.frc.team3328.robot.IMU#getRateZ()
- */
 @Override
 public synchronized double getRateZ() { //5
     return m_gyro_z;
   }
 
-  /* (non-Javadoc)
- * @see org.usfirst.frc.team3328.robot.IMU#getAccelX()
- */
 @Override
 public synchronized double getAccelX() { //6
     return m_accel_x;
   }
 
-  /* (non-Javadoc)
- * @see org.usfirst.frc.team3328.robot.IMU#getAccelY()
- */
 @Override
 public synchronized double getAccelY() { //7
     return m_accel_y;
   }
 
-  /* (non-Javadoc)
- * @see org.usfirst.frc.team3328.robot.IMU#getAccelZ()
- */
 @Override
 public synchronized double getAccelZ() { //8
     return m_accel_z;
   }
 
-  /* (non-Javadoc)
- * @see org.usfirst.frc.team3328.robot.IMU#getMagX()
- */
 @Override
 public synchronized double getMagX() { //9
     return m_mag_x;
   }
 
-  /* (non-Javadoc)
- * @see org.usfirst.frc.team3328.robot.IMU#getMagY()
- */
 @Override
 public synchronized double getMagY() { //10
     return m_mag_y;
   }
 
-  /* (non-Javadoc)
- * @see org.usfirst.frc.team3328.robot.IMU#getMagZ()
- */
 @Override
 public synchronized double getMagZ() { //11
     return m_mag_z;
   }
 
-  /* (non-Javadoc)
- * @see org.usfirst.frc.team3328.robot.IMU#getPitch()
- */
 @Override
 public synchronized double getPitch() { //12
     return m_pitch;
   }
 
-  /* (non-Javadoc)
- * @see org.usfirst.frc.team3328.robot.IMU#getRoll()
- */
 @Override
 public synchronized double getRoll() { //13
     return m_roll;
   }
 
-  /* (non-Javadoc)
- * @see org.usfirst.frc.team3328.robot.IMU#getYaw()
- */
 @Override
 public synchronized double getYaw() { //14
     return m_yaw;
   }
 
-  /* (non-Javadoc)
- * @see org.usfirst.frc.team3328.robot.IMU#getLastSampleTime()
- */
 @Override
 public synchronized double getLastSampleTime() { //15
     return m_last_sample_time;
   }
 
-  /* (non-Javadoc)
- * @see org.usfirst.frc.team3328.robot.IMU#getBarometricPressure()
- */
 @Override
 public synchronized double getBarometricPressure() { //16
     return m_baro;
   }
 
-  /* (non-Javadoc)
- * @see org.usfirst.frc.team3328.robot.IMU#getTemperature()
- */
 @Override
 public synchronized double getTemperature() { //17
     return m_temp;
   }
 
-  /* (non-Javadoc)
- * @see org.usfirst.frc.team3328.robot.IMU#getQuaternionW()
- */
 @Override
 public synchronized double getQuaternionW() { //18
     return m_ahrs_q1;
   }
 
-  /* (non-Javadoc)
- * @see org.usfirst.frc.team3328.robot.IMU#getQuaternionX()
- */
 @Override
 public synchronized double getQuaternionX() { //19
     return m_ahrs_q2;
   }
 
-  /* (non-Javadoc)
- * @see org.usfirst.frc.team3328.robot.IMU#getQuaternionY()
- */
 @Override
 public synchronized double getQuaternionY() { //20
     return m_ahrs_q3;
   }
 
-  /* (non-Javadoc)
- * @see org.usfirst.frc.team3328.robot.IMU#getQuaternionZ()
- */
 @Override
 public synchronized double getQuaternionZ() { //21
     return m_ahrs_q4;
   }
   
-  /* (non-Javadoc)
- * @see org.usfirst.frc.team3328.robot.IMU#getCompAngleZ()
- */
 @Override
 public synchronized double getCompAngleZ(){
 	  return compAngle;
@@ -683,17 +598,11 @@ public synchronized double getCompAngleZ(){
 		  getQuaternionZ(),
 		  m_integ_gyro_z};
 
-  /* (non-Javadoc)
- * @see org.usfirst.frc.team3328.robot.IMU#init()
- */
 @Override
 public void init() {
 	  calibrate();  
   }
   
-  /* (non-Javadoc)
- * @see org.usfirst.frc.team3328.robot.IMU#getData(double, int, double)
- */
 @Override
 public boolean getData(double data, int index, double deviation){
 	  if (data > iniv[index] + deviation || data < iniv[index] - deviation){
@@ -711,10 +620,7 @@ public boolean getData(double data, int index, double deviation){
 		  System.out.printf("--X--|--Y--|--Z--|\n------------------\n%05.2f|%05.2f|%05.2f|\n------------------\n", x ,y ,z);
 	  }
   }*/
-  
-  /* (non-Javadoc)
- * @see org.usfirst.frc.team3328.robot.IMU#rateOfChange()
- */
+
 @Override
 public double rateOfChange(){
 	  double result = iniv[2];
@@ -724,18 +630,12 @@ public double rateOfChange(){
   
   double compAngle;
   
-  /* (non-Javadoc)
- * @see org.usfirst.frc.team3328.robot.IMU#compFilter(double, double, double, double)
- */
 @Override
 public double compFilter(double angle, double gyro, double acc, double dt){
 	  iniv[22] = .98 * (angle + (gyro * dt)) + (.02 * acc);
 	  return iniv[22];
   }
   
-  /* (non-Javadoc)
- * @see org.usfirst.frc.team3328.robot.IMU#printAngle()
- */
 @Override
 public void printAngle(){
 	  double x = getAngleX(), y = getAngleY(), z = getAngleZ();
@@ -743,9 +643,7 @@ public void printAngle(){
 		  System.out.printf("%05.2f\n",z);
 	  }
   }
-  /* (non-Javadoc)
- * @see org.usfirst.frc.team3328.robot.IMU#printRate()
- */
+  
 @Override
 public void printRate(){
 	  double x = getRateX(), y = getRateY(), z = getRateZ();
@@ -753,9 +651,7 @@ public void printRate(){
 		  System.out.printf("--X--|--Y--|--Z--|\n------------------\n%05.2f|%05.2f|%05.2f|\n------------------\n", x ,y ,z);
 	  }
   }
-  /* (non-Javadoc)
- * @see org.usfirst.frc.team3328.robot.IMU#printAccel()
- */
+  
 @Override
 public void printAccel(){
 	  double x = getAccelX(), y = getAccelY(), z = getAccelZ();
@@ -763,9 +659,7 @@ public void printAccel(){
 		  System.out.printf("--X--|--Y--|--Z--|\n------------------\n%05.3f|%05.3f|%05.3f|\n------------------\n", x ,y ,z);
 	  }
   }
-  /* (non-Javadoc)
- * @see org.usfirst.frc.team3328.robot.IMU#printMag()
- */
+  
 @Override
 public void printMag(){
 	  int x = (int)getMagX(), y = (int)getMagY(), z = (int)getMagZ();
@@ -773,12 +667,9 @@ public void printMag(){
 		  System.out.printf("--X--|--Y--|--Z--|\n------------------\n%05d|%05d|%05d|\n------------------\n", x ,y ,z);
 	  }
   }
-  
-  /* (non-Javadoc)
- * @see org.usfirst.frc.team3328.robot.IMU#updateTable()
- */
-  @Override
-  public void updateTable() {
+
+@Override
+public void updateTable() {
     ITable table = getTable();
     if (table != null) {
       table.putNumber("Value", getAngle());

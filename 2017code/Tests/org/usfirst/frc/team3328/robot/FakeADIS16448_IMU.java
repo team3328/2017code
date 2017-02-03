@@ -1,5 +1,7 @@
 package org.usfirst.frc.team3328.robot;
 
+import org.usfirst.frc.team3328.robot.utilities.IMU;
+
 public class FakeADIS16448_IMU implements IMU {
 
 	private double angleZ;

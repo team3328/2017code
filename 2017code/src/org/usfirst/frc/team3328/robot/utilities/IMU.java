@@ -1,30 +1,15 @@
-package org.usfirst.frc.team3328.robot;
+package org.usfirst.frc.team3328.robot.utilities;
 
 public interface IMU {
 
-	/**
-	   * {@inheritDoc}
-	   */
 	void calibrate();
 
-	/**
-	   * {@inheritDoc}
-	   */
 	void reset();
 
-	/**
-	   * Delete (free) the spi port used for the IMU.
-	   */
 	void free();
 
-	/**
-	   * {@inheritDoc}
-	   */
 	double getAngle();
 
-	/**
-	   * {@inheritDoc}
-	   */
 	double getRate();
 
 	double getAngleX();
@@ -82,16 +67,22 @@ public interface IMU {
 	double compFilter(double angle, double gyro, double acc, double dt);
 
 	void printAngle();
+	/* (non-Javadoc)
+	* @see org.usfirst.frc.team3328.robot.IMU#printRate()
+	*/
 
 	void printRate();
+	/* (non-Javadoc)
+	* @see org.usfirst.frc.team3328.robot.IMU#printAccel()
+	*/
 
 	void printAccel();
+	/* (non-Javadoc)
+	* @see org.usfirst.frc.team3328.robot.IMU#printMag()
+	*/
 
 	void printMag();
 
-	/**
-	   * {@inheritDoc}
-	   */
 	void updateTable();
 
 }

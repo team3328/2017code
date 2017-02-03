@@ -1,4 +1,4 @@
-package org.usfirst.frc.team3328.robot;
+package org.usfirst.frc.team3328.robot.utilities;
 
 public interface Controller {
 
@@ -11,7 +11,7 @@ public interface Controller {
 	double getY();
 
 	//returns true when the button with the index "num" has been released
-	boolean getButton(int num);
+	boolean getButtonRelease(int num);
 
 	boolean getButtonPress(int num);
 

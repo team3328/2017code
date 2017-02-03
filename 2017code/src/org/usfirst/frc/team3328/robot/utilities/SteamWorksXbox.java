@@ -1,4 +1,4 @@
-package org.usfirst.frc.team3328.robot;
+package org.usfirst.frc.team3328.robot.utilities;
 
 import edu.wpi.first.wpilibj.XboxController;
 
@@ -30,7 +30,7 @@ public class SteamWorksXbox implements Controller {
 	
 	//returns true when the button with the index "num" has been released
 	@Override
-	public boolean getButton(int num){
+	public boolean getButtonRelease(int num){
 		if (xbox.getRawButton(num) &&  !button[num]){
 			button[num] = xbox.getRawButton(num);
 			return true;
