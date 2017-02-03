@@ -10,6 +10,7 @@ import org.usfirst.frc.team3328.robot.subsystems.SteamWorksDriveSystem;
 import org.usfirst.frc.team3328.robot.utilities.ADIS16448_IMU;
 import org.usfirst.frc.team3328.robot.utilities.Controller;
 import org.usfirst.frc.team3328.robot.utilities.DriveEncoders;
+import org.usfirst.frc.team3328.robot.utilities.DriveTalons;
 import org.usfirst.frc.team3328.robot.utilities.IMU;
 import org.usfirst.frc.team3328.robot.utilities.SteamWorksXbox;
 
@@ -24,6 +25,7 @@ public class Robot extends IterativeRobot {
 	SpeedController fr;
 	SpeedController bl;
 	SpeedController br;
+	DriveTalons driveTalons;
 	SpeedController climbControl;
 	Controller xbox;
 	DriveSystem drive;
@@ -40,9 +42,10 @@ public class Robot extends IterativeRobot {
 		fr = new Talon(1);
 		bl = new Talon(2);
 		br = new Talon(3);
+		driveTalons = new DriveTalons(fl, fr, bl, br);
 		climbControl = new Talon(4);
 		xbox = new SteamWorksXbox();
-		drive = new SteamWorksDriveSystem(encoders, fl, fr, bl, br, xbox);
+		drive = new SteamWorksDriveSystem(encoders, driveTalons, xbox);
 		climb = new SteamWorksClimber(climbControl, xbox);
 		imu = new ADIS16448_IMU();
 		comms = new Comms();
