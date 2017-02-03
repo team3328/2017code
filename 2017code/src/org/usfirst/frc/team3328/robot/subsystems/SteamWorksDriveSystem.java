@@ -2,13 +2,15 @@ package org.usfirst.frc.team3328.robot.subsystems;
 
 import org.usfirst.frc.team3328.robot.utilities.Controller;
 import org.usfirst.frc.team3328.robot.utilities.DriveEncoders;
+import org.usfirst.frc.team3328.robot.utilities.DriveTalons;
 
 import edu.wpi.first.wpilibj.SpeedController;
 
 public class SteamWorksDriveSystem implements DriveSystem {
 	
 	Controller con;
-	private SpeedController fl, fr, bl, br;
+	private DriveTalons talons;
+	private DriveEncoders encoders;
 	private double restraint = 1;
 	private double factor = 1.1;
 	private double displacement;
@@ -16,13 +18,9 @@ public class SteamWorksDriveSystem implements DriveSystem {
 	private boolean active = true;
 	
 	//instantiates talons assigns controller to "con"
-	public SteamWorksDriveSystem(DriveEncoders encoders, SpeedController frontLeft, SpeedController frontRight, 
-			SpeedController backLeft, SpeedController backRight, Controller controller){
-		fl = frontLeft;
-		fr = frontRight;
-		bl = backLeft;
-		br = backRight;
-		
+	public SteamWorksDriveSystem(DriveEncoders driveEncoders, DriveTalons driveTalons, Controller controller){
+		encoders = driveEncoders;
+		talons = driveTalons;
 		con = controller;
 	}
 	
@@ -33,38 +31,17 @@ public class SteamWorksDriveSystem implements DriveSystem {
 		return speed;
 	}
 	
-	//sets the right set of talons to the same value
-	//the right side is inverted because of how it was wired
-	private void right(double speed){
-		speed = -speed;
-		fr.set(speed);
-		br.set(speed);
-	}
-	//sets the left set of talons to the same value
-	private void left(double speed){
-		fl.set(speed);
-		bl.set(speed);
-	}
-	
-	//stops motors
-	private void stop(){
-		fl.set(0);
-		bl.set(0);
-		fr.set(0);
-		br.set(0);
-	}
-	
 	@Override
 	//moves the robot
 	public void move(double left, double right){
-		right(right);
-		left(left);
+		talons.right(right);
+		talons.left(left);
 	}
 	
 	//formats and prints the value that the speed controllers are receiving.
 	@Override
 	public void printSpeed(){
-		System.out.printf("%.2f || %.2f\n",fl.get(), fr.get());
+		System.out.printf("%.2f || %.2f\n",talons.getfl(), talons.getfr());
 	}
 	
 	
@@ -120,8 +97,8 @@ public class SteamWorksDriveSystem implements DriveSystem {
 		updateFactor();
 		System.out.println(factor);
 		updateDisplacement(desired, current);
-		right((speed + displacement) * factor);
-		left((speed - displacement) * factor);
+		talons.right((speed + displacement) * factor);
+		talons.left((speed - displacement) * factor);
 	}
 	
 	//takes a pixel offset to aim the robot
@@ -131,11 +108,11 @@ public class SteamWorksDriveSystem implements DriveSystem {
 	public void track(double pixel){
 		double sp = .08;
 		if (pixel > 350){
-				move(sp, -sp);
+			move(sp, -sp);
 		}else if (pixel < 290){
-				move(-sp, sp);
+			move(-sp, sp);
 		}else{
-			stop();
+			talons.stop();
 		}
 	}
 	
@@ -149,7 +126,7 @@ public class SteamWorksDriveSystem implements DriveSystem {
 			move((con.getX() + con.getY()) / restraint, 
 				(con.getX() - con.getY()) / restraint);
 		}else{
-			stop();
+			talons.stop();
 		}
 	}
 	
