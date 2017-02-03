@@ -1,11 +1,25 @@
 package org.usfirst.frc.team3328.robot;
 
+import org.usfirst.frc.team3328.robot.networking.Comms;
+import org.usfirst.frc.team3328.robot.networking.NetworkTablesTargetProvider;
+import org.usfirst.frc.team3328.robot.networking.Target;
+import org.usfirst.frc.team3328.robot.subsystems.Climber;
+import org.usfirst.frc.team3328.robot.subsystems.DriveSystem;
+import org.usfirst.frc.team3328.robot.subsystems.SteamWorksClimber;
+import org.usfirst.frc.team3328.robot.subsystems.SteamWorksDriveSystem;
+import org.usfirst.frc.team3328.robot.utilities.ADIS16448_IMU;
+import org.usfirst.frc.team3328.robot.utilities.Controller;
+import org.usfirst.frc.team3328.robot.utilities.DriveEncoders;
+import org.usfirst.frc.team3328.robot.utilities.IMU;
+import org.usfirst.frc.team3328.robot.utilities.SteamWorksXbox;
+
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.SpeedController;
 import edu.wpi.first.wpilibj.Talon;
 import edu.wpi.first.wpilibj.networktables.NetworkTable;
 
 public class Robot extends IterativeRobot {
+	DriveEncoders encoders;
 	SpeedController fl;
 	SpeedController fr;
 	SpeedController bl;
@@ -14,7 +28,7 @@ public class Robot extends IterativeRobot {
 	Controller xbox;
 	DriveSystem drive;
 	Climber climb;
-	ADIS16448_IMU imu;
+	IMU imu;
 	Controller cont;
 	Comms comms;
 	Target target;
@@ -28,7 +42,7 @@ public class Robot extends IterativeRobot {
 		br = new Talon(3);
 		climbControl = new Talon(4);
 		xbox = new SteamWorksXbox();
-		drive = new SteamWorksDriveSystem(fl, fr, bl, br, xbox);
+		drive = new SteamWorksDriveSystem(encoders, fl, fr, bl, br, xbox);
 		climb = new SteamWorksClimber(climbControl, xbox);
 		imu = new ADIS16448_IMU();
 		comms = new Comms();

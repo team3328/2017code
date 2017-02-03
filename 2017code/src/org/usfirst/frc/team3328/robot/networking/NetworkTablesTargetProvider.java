@@ -1,4 +1,4 @@
-package org.usfirst.frc.team3328.robot;
+package org.usfirst.frc.team3328.robot.networking;
 
 public class NetworkTablesTargetProvider implements TargetProvider{
 	

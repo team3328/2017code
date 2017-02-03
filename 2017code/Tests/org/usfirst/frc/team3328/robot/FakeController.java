@@ -1,5 +1,7 @@
 package org.usfirst.frc.team3328.robot;
 
+import org.usfirst.frc.team3328.robot.utilities.Controller;
+
 public class FakeController implements Controller {
 
 	double x;
@@ -26,7 +28,7 @@ public class FakeController implements Controller {
 	}
 	
 	@Override
-	public boolean getButton(int num) {
+	public boolean getButtonRelease(int num) {
 		// TODO Auto-generated method stub
 		return false;
 	}
