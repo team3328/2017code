@@ -5,7 +5,7 @@ import org.usfirst.frc.team3328.robot.subsystems.Climber;
 public class FakeClimber implements Climber {
 
 	@Override
-	public void driverControl() {
+	public void controlClimber() {
 		// TODO Auto-generated method stub
 
 	}
