@@ -1,25 +1,20 @@
 package org.usfirst.frc.team3328.robot.networking;
 
-import java.io.Serializable;
+import java.util.concurrent.atomic.AtomicReference;
 
-public class Target implements Serializable{
-	
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
-	private double pixel; 
+public class Target {
+	private AtomicReference<Double> pixel; 
 	private double distance;
 	private long lastTime = 0, time = 0;
 	private boolean status = false;
 	
 	public double getPixel(){
-		return pixel;
+		return pixel.get();
 	}
 	
 	public void setPixel(double ang){
 		//System.out.println("set pixel to " + ang);
-		pixel = ang;
+		pixel.set(ang);
 	}
 	
 	public double getDistance(){
