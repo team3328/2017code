@@ -9,8 +9,8 @@ public class SteamWorksXbox implements Controller {
 	boolean[] button = new boolean[10];
 	
 	//instantiates an xbox controller
-	public SteamWorksXbox(){
-			xbox = new XboxController(0);
+	public SteamWorksXbox(int channel){
+			xbox = new XboxController(channel);
 	}
 	
 	//returns the right trigger minus the left trigger to allow for forwards and reverse

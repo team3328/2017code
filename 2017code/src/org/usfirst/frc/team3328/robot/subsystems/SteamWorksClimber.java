@@ -7,48 +7,26 @@ import edu.wpi.first.wpilibj.SpeedController;
 public class SteamWorksClimber implements Climber {
 	
 	Controller con;
-	SpeedController talon;
+	SpeedController winch;
 	boolean active = false;
+	double factor = 5;
 	
 	public SteamWorksClimber(SpeedController speedController, Controller controller){
-		talon = speedController;
+		winch = speedController;
 		con = controller;
 	}
 	
-	private void up(double speed){
-		talon.set(speed / 5);
+	private void move(double speed){
+		winch.set(speed / factor);
 	}
 	
-	private void down(double speed){
-		talon.set(-speed / 5);
-	}
-	
-	private void stop(){
-		talon.set(0);
-	}
-	
-	private boolean isActive(){
-		if (con.getButtonRelease(1)){
-			active = !active;
-			System.out.println("Climber: " + active);
-		}
-		return active;
-	}
-	
-	/* (non-Javadoc)
-	 * @see org.usfirst.frc.team3328.robot.Climber#driverControl()
-	 */
+	//Sets the climber to the xbox x-axis
+	// x-axis = right trigger - left trigger
 	@Override
-	public void driverControl(){
-		if (isActive()){
+	public void controlClimber(){
 			if (con.getX() > 0){
-				up(con.getX());
-			}else{
-				down(con.getY());
-			}
-		}else{
-			stop();
-		}
+				move(con.getX());
+			} 
 	}
 	
 }
